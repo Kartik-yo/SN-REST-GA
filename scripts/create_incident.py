@@ -5,7 +5,7 @@ import sys
 # ServiceNow details
 BASE_URL = "https://dev199705.service-now.com"
 CREATE_INCIDENT_API = f"{BASE_URL}/api/now/table/incident"
-USERNAME = "SN-REST-GA"
+USERNAME = "usersn"
 PASSWORD = "JDwOKqZ[vGqU:ks>qCWJLOr>SL+{#r+5eE%9#cQQolx}H4vKQqw)h5G5)g#$Dma^pi9gOa*m[diyZ^piG?XghzcrkFY?>t6VnJ#M"
 
 def create_incident(description, pipeline_name):
