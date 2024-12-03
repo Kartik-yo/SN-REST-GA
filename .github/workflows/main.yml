@@ -1,0 +1,30 @@
+name: CI/CD Pipeline with ServiceNow Integration
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: Run Pipeline Script
+        run: |
+          python build.py || python create_incident.py "Build Pipeline Failed" "Build Pipeline"
+
+      - name: Resolve Incident (if successful)
+        if: success()
+        run: python resolve_incident.py <incident_sys_id_here> "Pipeline completed successfully."
