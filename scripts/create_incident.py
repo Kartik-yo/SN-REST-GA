@@ -5,8 +5,8 @@ import sys
 # ServiceNow details
 BASE_URL = "https://dev199705.service-now.com"
 CREATE_INCIDENT_API = f"{BASE_URL}/api/now/table/incident"
-USERNAME = "usersn"
-PASSWORD = "d+0B%(UlDt63?%6wo:].BeB_d;>9cu!YYmm.!s85Ce]Rrl.2]O0ofBtq>URXprCSju[Sh+?4Pm*mKsRkyZ-beDTkq?m7v!nHsIl*"
+EMAIL = "kartikmesh2406@gmail.com"
+PASSWORD = "fG3MSnurE!&rA@4"
 
 def create_incident(description, pipeline_name):
     payload = {
@@ -17,7 +17,7 @@ def create_incident(description, pipeline_name):
     }
     response = requests.post(
         CREATE_INCIDENT_API,
-        auth=HTTPBasicAuth(USERNAME, PASSWORD),
+        auth=HTTPBasicAuth(EMAIL, PASSWORD),
         headers={"Content-Type": "application/json"},
         json=payload
     )
