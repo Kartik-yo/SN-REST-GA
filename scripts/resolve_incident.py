@@ -5,7 +5,7 @@ import sys
 # ServiceNow details
 BASE_URL = "https://dev199705.service-now.com"
 USERNAME = "usersn"
-PASSWORD = "JDwOKqZ[vGqU:ks>qCWJLOr>SL+{#r+5eE%9#cQQolx}H4vKQqw)h5G5)g#$Dma^pi9gOa*m[diyZ^piG?XghzcrkFY?>t6VnJ#M"
+PASSWORD = "d+0B%(UlDt63?%6wo:].BeB_d;>9cu!YYmm.!s85Ce]Rrl.2]O0ofBtq>URXprCSju[Sh+?4Pm*mKsRkyZ-beDTkq?m7v!nHsIl*"
 
 def resolve_incident(incident_sys_id, resolution_notes):
     UPDATE_INCIDENT_API = f"{BASE_URL}/api/now/table/incident/{incident_sys_id}"
