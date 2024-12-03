@@ -1,14 +1,21 @@
 import requests
 from requests.auth import HTTPBasicAuth
+import os
 import sys
 
 # ServiceNow details
 BASE_URL = "https://dev199705.service-now.com"
 CREATE_INCIDENT_API = f"{BASE_URL}/api/now/table/incident"
+
+# Fetch credentials from environment variables
 EMAIL = "kartikmesh2406@gmail.com"
 PASSWORD = "fG3MSnurE!&rA@4"
 
 def create_incident(description, pipeline_name):
+    if not EMAIL or not PASSWORD:
+        print("Error: ServiceNow credentials are not set.")
+        sys.exit(1)
+
     payload = {
         "short_description": f"Pipeline Failed: {pipeline_name}",
         "description": description,
