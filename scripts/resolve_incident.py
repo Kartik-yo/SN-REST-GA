@@ -15,7 +15,7 @@ def resolve_incident(incident_sys_id, resolution_notes):
     }
     response = requests.put(
         UPDATE_INCIDENT_API,
-        auth=HTTPBasicAuth(USERNAME, PASSWORD),
+        auth=HTTPBasicAuth(EMAIL, PASSWORD),
         headers={"Content-Type": "application/json"},
         json=payload
     )
