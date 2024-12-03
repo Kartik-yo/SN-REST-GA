@@ -20,7 +20,9 @@ jobs:
 
       - name: Install Dependencies
         run: pip install requests
-
+      - env:
+          SERVICENOW_USERNAME: ${{ secrets.SERVICENOW_USERNAME }}
+          SERVICENOW_PASSWORD: ${{ secrets.SERVICENOW_PASSWORD }}
       - name: Run Pipeline Script
         run: |
           python build.py || python create_incident.py "Build Pipeline Failed" "Build Pipeline"
