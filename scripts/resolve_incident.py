@@ -4,7 +4,7 @@ import sys
 
 # ServiceNow details
 BASE_URL = "https://dev199705.service-now.com"
-USERNAME = "SN-REST-GA"
+USERNAME = "usersn"
 PASSWORD = "JDwOKqZ[vGqU:ks>qCWJLOr>SL+{#r+5eE%9#cQQolx}H4vKQqw)h5G5)g#$Dma^pi9gOa*m[diyZ^piG?XghzcrkFY?>t6VnJ#M"
 
 def resolve_incident(incident_sys_id, resolution_notes):
