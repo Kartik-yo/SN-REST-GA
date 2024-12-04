@@ -21,13 +21,33 @@ jobs:
       - name: Install Dependencies
         run: pip install requests
 
-      - name: Run Pipeline Script
+      - name: Run Build
         env:
-          SERVICENOW_USERNAME: ${{ secrets.SERVICENOW_USERNAME }}
+          SERVICENOW_EMAIL: ${{ secrets.SERVICENOW_EMAIL }}
           SERVICENOW_PASSWORD: ${{ secrets.SERVICENOW_PASSWORD }}
         run: |
-          python scripts/build.py || python scripts/create_incident.py "Build Pipeline Failed" "Build Pipeline"
+          python scripts/build.py || (
+            curl -X POST "https://dev199705.service-now.com/$restapi.do?ns=now&service=Table%20API&version=latest" \
+            -u "$SERVICENOW_USERNAME:$SERVICENOW_PASSWORD" \
+            -H "Content-Type: application/json" \
+            -d '{
+                  "short_description": "Pipeline Failed: Build Pipeline",
+                  "description": "Build Pipeline Failed",
+                  "urgency": "1",
+                  "impact": "1"
+                }'
+          )
 
       - name: Resolve Incident (if successful)
         if: success()
-        run: python scripts/resolve_incident.py <incident_sys_id_here> "Pipeline completed successfully."
+        env:
+          SERVICENOW_EMAIL: ${{ secrets.SERVICENOW_EMAIL }}
+          SERVICENOW_PASSWORD: ${{ secrets.SERVICENOW_PASSWORD }}
+        run: |
+          curl -X PATCH "https://dev199705.service-now.com/$restapi.do?ns=now&service=Table%20API&version=latest" \
+          -u "$SERVICENOW_USERNAME:$SERVICENOW_PASSWORD" \
+          -H "Content-Type: application/json" \
+          -d '{
+                "state": "Resolved",
+                "comments": "Pipeline completed successfully."
+              }'
