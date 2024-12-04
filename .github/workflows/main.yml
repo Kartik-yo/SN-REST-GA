@@ -27,14 +27,16 @@ jobs:
           SERVICENOW_PASSWORD: ${{ secrets.SERVICENOW_PASSWORD }}
         run: |
           python scripts/build.py || (
-            curl -X POST "https://dev199705.service-now.com/$restapi.do?ns=now&service=Table%20API&version=latest" \
+            curl -X POST "https://dev199705.service-now.com/api/now/table/incident" \
             -u "$SERVICENOW_EMAIL:$SERVICENOW_PASSWORD" \
             -H "Content-Type: application/json" \
             -d '{
                   "short_description": "Pipeline Failed: Build Pipeline",
-                  "description": "Build Pipeline Failed",
+                  "description": "The build pipeline encountered an error during execution.",
                   "urgency": "1",
-                  "impact": "1"
+                  "impact": "1",
+                  "category": "Software",
+                  "subcategory": "Build Pipeline"
                 }'
           )
 
@@ -44,7 +46,7 @@ jobs:
           SERVICENOW_EMAIL: ${{ secrets.SERVICENOW_EMAIL }}
           SERVICENOW_PASSWORD: ${{ secrets.SERVICENOW_PASSWORD }}
         run: |
-          curl -X PATCH "https://dev199705.service-now.com/$restapi.do?ns=now&service=Table%20API&version=latest" \
+          curl -X PATCH "https://dev199705.service-now.com/api/now/table/incident/<incident_sys_id_here>" \
           -u "$SERVICENOW_EMAIL:$SERVICENOW_PASSWORD" \
           -H "Content-Type: application/json" \
           -d '{
