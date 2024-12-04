@@ -28,7 +28,7 @@ jobs:
         run: |
           python scripts/build.py || (
             curl -X POST "https://dev199705.service-now.com/$restapi.do?ns=now&service=Table%20API&version=latest" \
-            -u "$SERVICENOW_USERNAME:$SERVICENOW_PASSWORD" \
+            -u "$SERVICENOW_EMAIL:$SERVICENOW_PASSWORD" \
             -H "Content-Type: application/json" \
             -d '{
                   "short_description": "Pipeline Failed: Build Pipeline",
@@ -45,7 +45,7 @@ jobs:
           SERVICENOW_PASSWORD: ${{ secrets.SERVICENOW_PASSWORD }}
         run: |
           curl -X PATCH "https://dev199705.service-now.com/$restapi.do?ns=now&service=Table%20API&version=latest" \
-          -u "$SERVICENOW_USERNAME:$SERVICENOW_PASSWORD" \
+          -u "$SERVICENOW_EMAIL:$SERVICENOW_PASSWORD" \
           -H "Content-Type: application/json" \
           -d '{
                 "state": "Resolved",
