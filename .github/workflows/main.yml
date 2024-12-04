@@ -23,12 +23,12 @@ jobs:
 
       - name: Run Build
         env:
-          SERVICENOW_EMAIL: ${{ secrets.SERVICENOW_EMAIL }}
-          SERVICENOW_PASSWORD: ${{ secrets.SERVICENOW_PASSWORD }}
+          SERVICENOW_CLIENT_ID: ${{ secrets.SERVICENOW_CLIENT_ID }}
+          SERVICENOW_CLIENT_SECRET: ${{ secrets.SERVICENOW_CLIENT_SECRET }}
         run: |
           python scripts/build.py || (
             curl -X POST "https://dev199705.service-now.com/api/now/table/incident" \
-            -u "$SERVICENOW_EMAIL:$SERVICENOW_PASSWORD" \
+            -H "Authorization: Bearer $SERVICENOW_ACCESS_TOKEN" \
             -H "Content-Type: application/json" \
             -d '{
                   "short_description": "Pipeline Failed: Build Pipeline",
@@ -43,11 +43,11 @@ jobs:
       - name: Resolve Incident (if successful)
         if: success()
         env:
-          SERVICENOW_EMAIL: ${{ secrets.SERVICENOW_EMAIL }}
-          SERVICENOW_PASSWORD: ${{ secrets.SERVICENOW_PASSWORD }}
+          SERVICENOW_CLIENT_ID: ${{ secrets.SERVICENOW_CLIENT_ID }}
+          SERVICENOW_CLIENT_SECRET: ${{ secrets.SERVICENOW_CLIENT_SECRET }}
         run: |
           curl -X PATCH "https://dev199705.service-now.com/api/now/table/incident/<incident_sys_id_here>" \
-          -u "$SERVICENOW_EMAIL:$SERVICENOW_PASSWORD" \
+          -H "Authorization: Bearer $SERVICENOW_ACCESS_TOKEN" \
           -H "Content-Type: application/json" \
           -d '{
                 "state": "Resolved",
